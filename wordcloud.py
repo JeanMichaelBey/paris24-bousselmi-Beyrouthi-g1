@@ -253,4 +253,104 @@ plt.axis('off')
 plt.tight_layout(pad = 0)
 plt.show()
 
+# ecercice 8
+# author : ED
+# state : ongoing
 
+# Exercise 8-----------------------------------------------------------------
+# Downloading a scientific article from ideas/repec.org
+!pip install Article
+!pip install newspaper3k
+
+from newspaper import Article
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+from wordcloud import STOPWORDS
+import numpy as np
+from PIL import Image
+import os
+import xlrd
+cwd = os.getcwd()
+cwd
+
+article = Article('https://ideas.repec.org/a/eee/jbrese/v101y2019icp70-82.html')
+______.download()
+article.parse()
+
+article._____
+
+# Black Font NO stopwords
+wc = WordCloud()
+___.generate(article._____)
+
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.imshow(wc, interpolation="bilinear")
+plt.axis('off')
+plt.tight_layout(pad = 0)
+plt.show()
+
+# Black Font with stopwords no special size
+STOPWORDS = ['the','of', 'this', 'in','or','item','are','as','want','abstract','jbusres','adding','its', 'our','elsevier', 'contact','you','using','about','bibliographic', 'download', 'help','by','a', 'title', 'citations', 'please', 'registered', 'please', 'for', 'title', 'if','that','http','authors','to','and','we', 'correct','author', 'correction','may','it', 'general']
+wc = WordCloud(stopwords=STOPWORDS)
+wc.generate(article.text)
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.imshow(wc, interpolation="bilinear")
+plt.axis('off')
+plt.tight_layout(pad = 0)
+plt.show()
+
+# White font with special size & number of characters
+
+STOPWORDS = ['the','of', 'this', 'in','or','item','are','as','want','abstract','jbusres','adding','its', 'our','elsevier', 'contact','you','using','about','bibliographic', 'download', 'help','by','a', 'title', 'citations', 'please', 'registered', 'please', 'for', 'title', 'if','that','http','authors','to','and','we', 'correct','author', 'correction','may','it', 'general']
+wc = WordCloud(background_color="white", max_words=2000,
+               stopwords=STOPWORDS, max_font_size=256,
+               random_state=42, width=500, height=500)
+wc.generate(article.text)
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.imshow(wc, interpolation="bilinear")
+plt.axis('off')
+plt.tight_layout(pad = 0)
+plt.show()
+
+# The same in black
+STOPWORDS = ['the','of', 'this', 'in','or','item','are','as','want','abstract','jbusres','adding','its', 'our','elsevier', 'contact','you','using','about','bibliographic', 'download', 'help','by','a', 'title', 'citations', 'please', 'registered', 'please', 'for', 'title', 'if','that','http','authors','to','and','we', 'correct','author', 'correction','may','it', 'general']
+wc = WordCloud(max_words=2000,
+               stopwords=STOPWORDS, max_font_size=256,
+               random_state=42, width=500, height=500)
+wc.generate(article.text)
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.imshow(wc, interpolation="bilinear")
+plt.axis('off')
+plt.tight_layout(pad = 0)
+plt.show()
+
+# Adding a cloud mask
+mask= np.array(Image.open("desktop/WC/heart.jpg"))
+STOPWORDS = ['the','of', 'this', 'in','or','item','are','as','RePEc','want','abstract','jbusres','adding','its', 'our','elsevier', 'contact','you','using','about','bibliographic', 'download', 'help','by','a', 'title', 'citations', 'please', 'registered', 'please', 'for', 'title', 'if','that','http','authors','to','and','we', 'correct','author', 'correction','may','it', 'general']
+wc = WordCloud(background_color="white",colormap="ocean",max_words=2000,
+               stopwords=STOPWORDS, mask=mask,max_font_size=256,
+               random_state=42, width=500, height=500)
+wc.generate(article.text)
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.imshow(wc, interpolation="bilinear")
+plt.axis('off')
+plt.tight_layout(pad = 0)
+plt.show()
+
+# COVID 
+
+article = Article('https://en.wikipedia.org/wiki/COVID-19_pandemic')
+article.download()
+article.parse()
+
+article.text
+mask= np.array(Image.open("desktop/WC/virus.jpg"))
+STOPWORDS = ['the','of', 'this', 'in','or','from','on', 'have','item','are','as','RePEc','want','abstract','jbusres','adding','its', 'our','elsevier', 'contact','you','using','about','bibliographic', 'download', 'help','by','a', 'title', 'citations', 'please', 'registered', 'please', 'for', 'title', 'if','that','http','authors','to','and','we', 'correct','author', 'correction','may','it', 'general']
+wc = WordCloud(background_color="white",colormap="winter",max_words=2000,
+               stopwords=STOPWORDS, mask=mask)
+wc.generate(article.text)
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.imshow(wc, interpolation="bilinear")
+plt.axis('off')
+plt.tight_layout(pad = 0)
+plt.show()
