@@ -10,6 +10,13 @@ Original file is located at
 # ecercice 1
 # author : Beyrouthi
 # state : ongoing
+#Exercise 1----------------------------------------------------------------
+!pip install _________
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+
 
 # ecercice 2
 # author : Beyrouthi
