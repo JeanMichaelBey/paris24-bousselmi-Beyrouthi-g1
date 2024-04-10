@@ -30,8 +30,51 @@ plt.tight_layout(pad = 0)
 plt.show()
 
 # ecercice 2
-# author : Beyrouthi
+# author : TC
 # state : ongoing
+
+!pip install pillow
+import numpy as np 
+from PIL import Image,ImageOps
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud,STOPWORDS,ImageColorGenerator
+from scipy.ndimage import gaussian_gradient_magnitude 
+
+# Download the Shakespeare text from the desktop
+file=open("desktop/WC/romeo.txt",'r')
+text=file.read()
+
+# Create the WordCloud
+canvas_ _____=1920
+canvas_ ____=1080 
+
+# Generate wordcloud
+wordcloud = ________ (width=canvas_width,height=canvas_height).generate(text)
+wordcloud.to_file("simple_wordcloud.png") 
+plt.figure(figsize = (10, 10), facecolor=None)
+
+# Save the output wordcloud in png format
+plt.imshow(wordcloud, interpolation='bilinear')
+
+# Show the image output 
+plt.axis("off") 
+plt.tight_layout(pad = 0)
+plt.show() 
+
+#--------additional tricks----
+# By default wordcloud generates random patterns but you can fix the seed
+# Generate wordcloud
+# Replace 1 with any number to get different result
+canvas_width=1920
+canvas_height=1080 
+wordcloud = WordCloud(width=canvas_width,height=canvas_height).generate(text)
+wordcloud = WordCloud(random_state=1).generate(text) 
+wordcloud.to_file("simple_wordcloud.png") 
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off") 
+plt.tight_layout(pad = 0)
+plt.show() 
 
 # ecercice 3
 # author : ED
@@ -54,13 +97,109 @@ plt.tight_layout(pad = 0)
 plt.show() 
 
 # ecercice 4
-# author : Beyrouthi
+# author : GdG
 # state : ongoing
 
+# Exercise 4---------------------------------------------------------------------
+# Use Masks
+romeo_mask= np.array(Image.open("desktop/WC/romeo1.jpg"))
+
+# Read image
+wc = WordCloud(_____=romeo_mask,colormap='inferno',random_state=5,max_font_size=50,min_font_size=0)
+
+# Generate wordcloud with text data
+wc.generate(text)
+
+# Save image
+wc.to_file("masked_wc.jpg")
+
+# Show image
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.tight_layout(pad = 0)
+plt.imshow(wc, interpolation='bilinear')
+ 
+# Off axis on image
+plt.show() #show image
+
 # ecercice 5
-# author : Beyrouthi
+# author : JA
 # state : ongoing
+
+# Use of colored image for your mask so that the Cloud adapts to it (Exercise 5)
+image = np.array(Image.open("desktop/WC/romeo2.jpg"))
+image_mask = image.copy()
+image[image_mask.sum(axis=2) == 0] = 255
+edges = np.mean([gaussian_gradient_magnitude(image[:, :, i] / 255., 2) for i in range(3)], axis=0)
+image_mask[edges > .1] = 255
+
+wc = WordCloud(background_color='black', mask=image_mask, mode='RGBA')
+wc.generate(text)
+
+image_colors = ImageColorGenerator(image)
+wc.recolor(color_func=image_colors)
+
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.figure(figsize=(10, 10))
+plt.tight_layout(pad = 0)
+plt.imshow(wc, interpolation="bilinear")
+wc.to_file("color_masked_wordcloud.png")
 
 # ecercice 6
 # author : Beyrouthi
 # state : ongoing
+
+# Exercise 6------------------------------------------------------------------
+# My paper Word cloud
+# In blue
+file=open("Desktop/WC/test.txt",'r')
+text=file.read()
+canvas_width=1920
+canvas_height=1080 
+wordcloud = WordCloud(width=canvas_width,height=canvas_height).generate(text)
+exclure_mots = ['d', 'du', 'de', 'la', 'des', 'le', 'et', 'est', 'elle', 'dont','ainsi','après','une', 'en', 'que', 'aux', 'qui', 'ces', 'les', 'dans', 'sur', 'l', 'un', 'pour', 'par', 'il', 'ou', 'à', 'ce', 'a', 'sont', 'cas', 'plus', 'leur', 'se', 's', 'vous', 'au', 'c', 'aussi', 'toutes', 'autre', 'comme']
+wordcloud = WordCloud(background_color = 'white', stopwords = exclure_mots, max_words = 50).generate(text)
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.imshow(wordcloud)
+plt.axis("off")
+plt.tight_layout(pad = 0)
+plt.show()
+
+# Colormap hot
+file=open("desktop/WC/test.txt",'r')
+text=file.read()
+wordcloud = WordCloud(width=canvas_width,height=canvas_height).generate(text)
+stopwords = ['d','nombre','nécessaire','cet','grande', 'très', 'cherche','article','ont','favorisent','nous','cependant','partie','dépend', 'standard','existants', 'nos', 'théoriques','son','avec','celles', 'davantage', 'étudier', 'lequel', 'bancaire','aide', 'impliquent', 'dites', 'désormais', 'telles','tels', 'tout','avec', 'travaux', 'fournir','relativement','autres','obtenu','termes','cherche''telles','Reingold','soutenir','idée','ne', 'disposent', 'travail','différentes','concerne','qu', 'établissement','établissements','relations','certains','pendant', 'même', 'dont','ils','elles', 'cette','été', 'où','ainsi','après', 'leurs', 'peut', 'avant','entre', 'on','du', 'théorique','cet','de', 'la', 'des', 'le', 'et', 'est', 'elle', 'une', 'en', 'que', 'aux', 'qui', 'ces', 'les', 'dans', 'sur', 'l', 'un', 'pour', 'par', 'il', 'ou', 'à', 'ce', 'a', 'sont', 'cas', 'plus', 'leur', 'se', 's', 'vous', 'au', 'c', 'aussi', 'toutes', 'autre', 'comme']
+wordcloud = WordCloud(stopwords=stopwords,background_color='white',random_state=1,colormap='hot',max_font_size=800,min_font_size=20,width=canvas_width,height=canvas_height).generate(text)
+wordcloud.to_file("simple_wordcloud.png") 
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off") 
+plt.tight_layout(pad = 0)
+plt.show()
+
+# Colormap summer/binary/gist_yarg/gist_gray/gray/bone/pink/spring/autumn/winter/cool/Wistia/afmhot/gist_heat/cooper
+# https://matplotlib.org/stable/gallery/color/colormap_reference.html
+# https://matplotlib.org/stable/gallery/color/named_colors.html
+file=open("desktop/WC/test.txt",'r')
+text=file.read()
+wordcloud = WordCloud(width=canvas_width,height=canvas_height).generate(text)
+stopwords = ['d','nombre','nécessaire','cet','grande', 'très', 'cherche','article','ont','favorisent','nous','cependant','partie','dépend', 'standard','existants', 'nos', 'théoriques','son','avec','celles', 'davantage', 'étudier', 'lequel', 'bancaire','aide', 'impliquent', 'dites', 'désormais', 'telles','tels', 'tout','avec', 'travaux', 'fournir','relativement','autres','obtenu','termes','cherche''telles','Reingold','soutenir','idée','ne', 'disposent', 'travail','différentes','concerne','qu', 'établissement','établissements','relations','certains','pendant', 'même', 'dont','ils','elles', 'cette','été', 'où','ainsi','après', 'leurs', 'peut', 'avant','entre', 'on','du', 'théorique','cet','de', 'la', 'des', 'le', 'et', 'est', 'elle', 'une', 'en', 'que', 'aux', 'qui', 'ces', 'les', 'dans', 'sur', 'l', 'un', 'pour', 'par', 'il', 'ou', 'à', 'ce', 'a', 'sont', 'cas', 'plus', 'leur', 'se', 's', 'vous', 'au', 'c', 'aussi', 'toutes', 'autre', 'comme']
+wordcloud = WordCloud(stopwords=stopwords,background_color='aliceblue',random_state=1,colormap='twilight',max_font_size=800,min_font_size=20,width=canvas_width,height=canvas_height).generate(text)
+wordcloud.to_file("simple_wordcloud.png") 
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off") 
+plt.tight_layout(pad = 0)
+plt.show()
+
+# Add a Mask
+mask= np.array(Image.open("desktop/WC/AF.jpeg"))
+wordcloud = WordCloud(width=canvas_width,height=canvas_height).generate(text)
+stopwords = ['d','nombre','nécessaire','cet','grande', 'très', 'cherche','article','ont','favorisent','nous','cependant','partie','dépend', 'standard','existants', 'nos', 'théoriques','son','avec','celles', 'davantage', 'étudier', 'lequel', 'bancaire','aide', 'impliquent', 'dites', 'désormais', 'telles','tels', 'tout','avec', 'travaux', 'fournir','relativement','autres','obtenu','termes','cherche''telles','Reingold','soutenir','idée','ne', 'disposent', 'travail','différentes','concerne','qu', 'établissement','établissements','relations','certains','pendant', 'même', 'dont','ils','elles', 'cette','été', 'où','ainsi','après', 'leurs', 'peut', 'avant','entre', 'on','du', 'théorique','cet','de', 'la', 'des', 'le', 'et', 'est', 'elle', 'une', 'en', 'que', 'aux', 'qui', 'ces', 'les', 'dans', 'sur', 'l', 'un', 'pour', 'par', 'il', 'ou', 'à', 'ce', 'a', 'sont', 'cas', 'plus', 'leur', 'se', 's', 'vous', 'au', 'c', 'aussi', 'toutes', 'autre', 'comme']
+wordcloud = WordCloud(stopwords=stopwords,mask=mask,background_color='aliceblue',random_state=1,colormap='twilight',max_font_size=800,min_font_size=20,width=canvas_width,height=canvas_height).generate(text)
+wordcloud.to_file("simple_wordcloud.png") 
+plt.figure(figsize = (10, 10), facecolor=None)
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off") 
+plt.tight_layout(pad = 0)
+plt.show()
