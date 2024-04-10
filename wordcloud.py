@@ -122,7 +122,7 @@ plt.imshow(wc, interpolation='bilinear')
 plt.show() #show image
 
 # ecercice 5
-# author : JA
+# author : JAn
 # state : ongoing
 
 # Use of colored image for your mask so that the Cloud adapts to it (Exercise 5)
@@ -145,7 +145,7 @@ plt.imshow(wc, interpolation="bilinear")
 wc.to_file("color_masked_wordcloud.png")
 
 # ecercice 6
-# author : Beyrouthi
+# author : JAz
 # state : ongoing
 
 # Exercise 6------------------------------------------------------------------
